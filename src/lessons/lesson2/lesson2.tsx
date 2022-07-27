@@ -30,6 +30,7 @@ function sum(x: number) {
     function subsum(y: number) {
         return x + y
     }
+
     return subsum
 }
 
@@ -78,14 +79,14 @@ const newCounter = (x: number) => {
                 return --count
             }
         },
-        reset:  () => {
+        reset: () => {
             return () => {
                 count = x;
                 return count
             }
         },
         set: (y: number) => {
-            return ()=>{
+            return () => {
                 count = y;
                 return count
             }
@@ -108,15 +109,15 @@ let num4 = newCounter(5).decrease();
 console.log("5 -- : " + num4());
 console.log("5 -- : " + num4());
 console.log("5 -- : " + num4());
-let num5= newCounter(10);
+let num5 = newCounter(10);
 console.log("10 -- : " + num5.decrease()());
 console.log("10 -- : " + num5.decrease()());
 console.log("10 reset : " + num5.reset()());
 console.log("10 -- : " + num5.decrease()());
-let num6=newCounter(7)
+let num6 = newCounter(7)
 console.log("7 -- : " + num6.decrease()());
 console.log("7 set 11  : " + num6.set(11)());
-console.log("11 ++ : "+ num6.increase()())
+console.log("11 ++ : " + num6.increase()())
 
 // Task 04*
 // Реализовать функцию superSum которая принимает число в качестве аргумента, которое указывает на количество слагаемых
@@ -130,39 +131,61 @@ console.log("11 ++ : "+ num6.increase()())
 
 // P.S. типизируйте только аргументы, а при вызове функции используйте @ts-ignore
 
-const superSum = () => {
+function curry(func) { //@ts-ignore
+
+    return function curried(...args) {
+        if (args.length >= func.length) {
+            return func.apply(this,args);
+        } else {
+            return function(...args2:number[]) {
+                return curried.apply( args.concat(args2));
+            }
+        }
+    };
 
 }
+function sume (a:number, b:number, c:number):number {
+    return a + b + c;
+}
+
+let curriedSum = curry(sume); //@ts-ignore
+
+console.log( curriedSum(1, 2, 3) ); //@ts-ignore 6, всё ещё можно вызывать нормально
+console.log( curriedSum(1)(2,3) ); // @ts-ignore6, каррирование первого аргумента
+console.log( curriedSum(1)(2)(3) ); // @ts-ignore6, каррирование всех аргументов
+
 
 
 // Task 05
 // решить все задачи по рекурсии которые даны в конце статьи https://learn.javascript.ru/recursion
 
-const sumTo =(n:number) =>{
-    let result=0;
-    for (let i=0; i<=n; i++){
-        result+=i;
+const sumTo = (n: number) => {
+    let result = 0;
+    for (let i = 0; i <= n; i++) {
+        result += i;
     }
     return result
 }
 
-console.log('sum ver1 number 5 : '+sumTo(5))
+console.log('sum ver1 number 5 : ' + sumTo(5))
 
-const sumTo2 =(n:number):number => {
-    if (n<1) {
-        return  n
-    } else{ return n + sumTo2(n-1)}
-}
-console.log('sum ver2 number 5 : '+sumTo2(5))
-
-const factorial =(n:number):number =>{
-    if (n===1){
-        return 1
-    }else{
-        return n* factorial(n-1)
+const sumTo2 = (n: number): number => {
+    if (n < 1) {
+        return n
+    } else {
+        return n + sumTo2(n - 1)
     }
 }
-console.log("factorial 5 : "+factorial(5))
+console.log('sum ver2 number 5 : ' + sumTo2(5))
+
+const factorial = (n: number): number => {
+    if (n === 1) {
+        return 1
+    } else {
+        return n * factorial(n - 1)
+    }
+}
+console.log("factorial 5 : " + factorial(5))
 
 let list = {
     value: 1,
@@ -178,24 +201,25 @@ let list = {
     }
 };
 
-function printList(list:any) {
+function printList(list: any) {
 
-    console.log("list el : "+list.value);
+    console.log("list el : " + list.value);
     if (list.next) {
-       printList(list.next);
+        printList(list.next);
     }
 }
 
 printList(list);
 
-function printListRevers(list:any) {
+function printListRevers(list: any) {
 
 
     if (list.next) {
-        printListRevers(list.next);}
-
-        console.log("listReverse el : "+list.value);
+        printListRevers(list.next);
     }
+
+    console.log("listReverse el : " + list.value);
+}
 
 printListRevers(list);
 
