@@ -30,7 +30,6 @@ function sum(x: number) {
     function subsum(y: number) {
         return x + y
     }
-
     return subsum
 }
 
@@ -118,7 +117,6 @@ let num6=newCounter(7)
 console.log("7 -- : " + num6.decrease()());
 console.log("7 set 11  : " + num6.set(11)());
 console.log("11 ++ : "+ num6.increase()())
-
 
 // Task 04*
 // Реализовать функцию superSum которая принимает число в качестве аргумента, которое указывает на количество слагаемых
