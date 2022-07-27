@@ -138,6 +138,67 @@ const superSum = () => {
 // Task 05
 // решить все задачи по рекурсии которые даны в конце статьи https://learn.javascript.ru/recursion
 
+const sumTo =(n:number) =>{
+    let result=0;
+    for (let i=0; i<=n; i++){
+        result+=i;
+    }
+    return result
+}
+
+console.log('sum ver1 number 5 : '+sumTo(5))
+
+const sumTo2 =(n:number):number => {
+    if (n<1) {
+        return  n
+    } else{ return n + sumTo2(n-1)}
+}
+console.log('sum ver2 number 5 : '+sumTo2(5))
+
+const factorial =(n:number):number =>{
+    if (n===1){
+        return 1
+    }else{
+        return n* factorial(n-1)
+    }
+}
+console.log("factorial 5 : "+factorial(5))
+
+let list = {
+    value: 1,
+    next: {
+        value: 2,
+        next: {
+            value: 3,
+            next: {
+                value: 4,
+                next: null
+            }
+        }
+    }
+};
+
+function printList(list:any) {
+
+    console.log("list el : "+list.value);
+    if (list.next) {
+       printList(list.next);
+    }
+}
+
+printList(list);
+
+function printListRevers(list:any) {
+
+
+    if (list.next) {
+        printListRevers(list.next);}
+
+        console.log("listReverse el : "+list.value);
+    }
+
+printListRevers(list);
+
 // Task 06
 // написать функцию, которая повторяет функционал метода flat массива на всю глубину.
 
