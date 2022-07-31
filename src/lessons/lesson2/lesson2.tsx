@@ -26,10 +26,13 @@ console.log('lesson 2');
 
 // Task 01
 // Реализовать функцию sum которая суммирует 2 числа следующим образом sum(3)(6) === 9
+
+
 function sum(x: number) {
     function subsum(y: number) {
         return x + y
     }
+
     return subsum
 }
 
@@ -78,14 +81,14 @@ const newCounter = (x: number) => {
                 return --count
             }
         },
-        reset:  () => {
+        reset: () => {
             return () => {
                 count = x;
                 return count
             }
         },
         set: (y: number) => {
-            return ()=>{
+            return () => {
                 count = y;
                 return count
             }
@@ -108,20 +111,20 @@ let num4 = newCounter(5).decrease();
 console.log("5 -- : " + num4());
 console.log("5 -- : " + num4());
 console.log("5 -- : " + num4());
-let num5= newCounter(10);
+let num5 = newCounter(10);
 console.log("10 -- : " + num5.decrease()());
 console.log("10 -- : " + num5.decrease()());
 console.log("10 reset : " + num5.reset()());
 console.log("10 -- : " + num5.decrease()());
-let num6=newCounter(7)
+let num6 = newCounter(7)
 console.log("7 -- : " + num6.decrease()());
 console.log("7 set 11  : " + num6.set(11)());
-console.log("11 ++ : "+ num6.increase()())
+console.log("11 ++ : " + num6.increase()())
 
 // Task 04*
 // Реализовать функцию superSum которая принимает число в качестве аргумента, которое указывает на количество слагаемых
 // и что бы корректно работали следующие вызовы:
-// 1) superSum(0) //0
+// 1) (0) //0
 // 2) superSum(3)(2)(5)(3) //10
 // 3) superSum(3)(2)(5,3) //10
 // 4) superSum(3)(2,5,3) //10
@@ -130,17 +133,116 @@ console.log("11 ++ : "+ num6.increase()())
 
 // P.S. типизируйте только аргументы, а при вызове функции используйте @ts-ignore
 
-const superSum = () => {
+//@ts-ignore
+function superSum(n: number) {
+    if(n <= 0 ) return 0
 
+    let _args: number[] = []
+
+    const carry = (...args: number[]) => {
+        _args = [..._args, ...args]
+        if(_args.length >= n){
+            _args.length = n
+            return _args.reduce((acc: any, number) => acc + number)
+        }
+        return carry
+    }
+    return carry
 }
+
+
+//@ts-ignore
+console.log( "superSum : "+ superSum(0) );//@ts-ignore
+/*
+console.log( "superSum : "+ curry(superSum(3)(2)  )); //@ts-ignore
+
+console.log( "superSum : "+ superSum(3)(2)(5,3) );//@ts-ignore
+console.log( "superSum : "+ superSum(3)(2,5,3));//@ts-ignore
+console.log( "superSum : "+ superSum(3)(2,5)(3) );//@ts-ignore
+console.log( "superSum : "+ superSum(3)(2,5)(3,9) );//@ts-ignore
+*/
+
+
 
 
 // Task 05
 // решить все задачи по рекурсии которые даны в конце статьи https://learn.javascript.ru/recursion
 
+const sumTo = (n: number) => {
+    let result = 0;
+    for (let i = 0; i <= n; i++) {
+        result += i;
+    }
+    return result
+}
+
+console.log('sum ver1 number 5 : ' + sumTo(5))
+
+const sumTo2 = (n: number): number => {
+    if (n < 1) {
+        return n
+    } else {
+        return n + sumTo2(n - 1)
+    }
+}
+console.log('sum ver2 number 5 : ' + sumTo2(5))
+
+const factorial = (n: number): number => {
+    if (n === 1) {
+        return 1
+    } else {
+        return n * factorial(n - 1)
+    }
+}
+console.log("factorial 5 : " + factorial(5))
+
+let list = {
+    value: 1,
+    next: {
+        value: 2,
+        next: {
+            value: 3,
+            next: {
+                value: 4,
+                next: null
+            }
+        }
+    }
+};
+
+function printList(list: any) {
+
+    console.log("list el : " + list.value);
+    if (list.next) {
+        printList(list.next);
+    }
+}
+
+printList(list);
+
+function printListRevers(list: any) {
+
+
+    if (list.next) {
+        printListRevers(list.next);
+    }
+
+    console.log("listReverse el : " + list.value);
+}
+
+printListRevers(list);
+
 // Task 06
 // написать функцию, которая повторяет функционал метода flat массива на всю глубину.
+const arr = [1, 2, [3, 4, [5, 6]]];
 
+const flatRecurs =(arr:any, d = 1)=> {
+    return d > 0 ? arr.reduce((acc:Array<number>, val:Array<number>) => acc.concat(Array.isArray(val) ? flatRecurs(val, d - 1) : val), [])
+        : arr.slice();
+};
+
+console.log("flatRecursive : "+flatRecurs(arr, Infinity));
+console.log("flat casual : "+arr.flat(Infinity));
 // just a plug
 
 
