@@ -26,6 +26,8 @@ console.log('lesson 2');
 
 // Task 01
 // Реализовать функцию sum которая суммирует 2 числа следующим образом sum(3)(6) === 9
+
+
 function sum(x: number) {
     function subsum(y: number) {
         return x + y
@@ -122,7 +124,7 @@ console.log("11 ++ : " + num6.increase()())
 // Task 04*
 // Реализовать функцию superSum которая принимает число в качестве аргумента, которое указывает на количество слагаемых
 // и что бы корректно работали следующие вызовы:
-// 1) superSum(0) //0
+// 1) (0) //0
 // 2) superSum(3)(2)(5)(3) //10
 // 3) superSum(3)(2)(5,3) //10
 // 4) superSum(3)(2,5,3) //10
@@ -131,28 +133,35 @@ console.log("11 ++ : " + num6.increase()())
 
 // P.S. типизируйте только аргументы, а при вызове функции используйте @ts-ignore
 
-function curry(func) { //@ts-ignore
+//@ts-ignore
+function superSum(n: number) {
+    if(n <= 0 ) return 0
 
-    return function curried(...args) {
-        if (args.length >= func.length) {
-            return func.apply(this,args);
-        } else {
-            return function(...args2:number[]) {
-                return curried.apply( args.concat(args2));
-            }
+    let _args: number[] = []
+
+    const carry = (...args: number[]) => {
+        _args = [..._args, ...args]
+        if(_args.length >= n){
+            _args.length = n
+            return _args.reduce((acc: any, number) => acc + number)
         }
-    };
-
-}
-function sume (a:number, b:number, c:number):number {
-    return a + b + c;
+        return carry
+    }
+    return carry
 }
 
-let curriedSum = curry(sume); //@ts-ignore
 
-console.log( curriedSum(1, 2, 3) ); //@ts-ignore 6, всё ещё можно вызывать нормально
-console.log( curriedSum(1)(2,3) ); // @ts-ignore6, каррирование первого аргумента
-console.log( curriedSum(1)(2)(3) ); // @ts-ignore6, каррирование всех аргументов
+//@ts-ignore
+console.log( "superSum : "+ superSum(0) );//@ts-ignore
+/*
+console.log( "superSum : "+ curry(superSum(3)(2)  )); //@ts-ignore
+
+console.log( "superSum : "+ superSum(3)(2)(5,3) );//@ts-ignore
+console.log( "superSum : "+ superSum(3)(2,5,3));//@ts-ignore
+console.log( "superSum : "+ superSum(3)(2,5)(3) );//@ts-ignore
+console.log( "superSum : "+ superSum(3)(2,5)(3,9) );//@ts-ignore
+*/
+
 
 
 
@@ -225,7 +234,15 @@ printListRevers(list);
 
 // Task 06
 // написать функцию, которая повторяет функционал метода flat массива на всю глубину.
+const arr = [1, 2, [3, 4, [5, 6]]];
 
+const flatRecurs =(arr:any, d = 1)=> {
+    return d > 0 ? arr.reduce((acc:Array<number>, val:Array<number>) => acc.concat(Array.isArray(val) ? flatRecurs(val, d - 1) : val), [])
+        : arr.slice();
+};
+
+console.log("flatRecursive : "+flatRecurs(arr, Infinity));
+console.log("flat casual : "+arr.flat(Infinity));
 // just a plug
 
 
