@@ -17,7 +17,7 @@ function App() {
 
 
             {/*<Lesson3 />*/}
-            {/*<Lesson4 />*/}
+            <Lesson4 />
         </div>
     );
 }

@@ -1,4 +1,5 @@
 import {posix} from "path";
+import React from "react";
 
 console.log('lesson 4');
 
@@ -9,20 +10,20 @@ console.log('lesson 4');
 // Task 01
 // Создайте промис, который постоянно находиться в состоянии pending.
 // В конструкторе промиса выведите в консоль сообщение "Promise is created".
-const task1= new Promise(()=>{
-
+const promise1 = new Promise((resolve, reject) => {
     console.log("Promise is created")
 })
-
+console.log(promise1)
 
 // Task 02
 // Создайте промис, который после создания сразу же переходит в состояние resolve
 // и возвращает строку 'Promise Data'
 // Получите данные промиса и выведите их в консоль
-const task2= new Promise((resolve)=>{
+const task2 = new Promise((resolve) => {
     resolve("Promise Data")
 })
-task2.then((resolve)=>{
+console.log(task2)
+task2.then((resolve) => {
     console.log(resolve)
 })
 
@@ -30,10 +31,11 @@ task2.then((resolve)=>{
 // Создайте промис, который после создания сразу же переходит в состояние rejected
 // и возвращает строку 'Promise Error'
 // Получите данные промиса и выведите их в консоль
-const task3= new Promise((reject)=>{
+const task3 = new Promise((resolve, reject) => {
     reject("Promise Error")
 })
-task3.then((err)=>{
+console.log(task3)
+task3.then((err) => {
     console.log(err)
 })
 
@@ -42,10 +44,11 @@ task3.then((err)=>{
 // (Используйте setTimeout)
 // и возвращает строку 'Promise Data'
 // Получите данные промиса и выведите их в консоль
-const task4= new Promise((resolve)=>{
-    setTimeout(()=>resolve("Promise Data"),3000)
+const task4 = new Promise((resolve, reject) => {
+    setTimeout(() => resolve("Promise Data"), 3000)
 })
-task4.then((resolve)=>{
+console.log(task4)
+task4.then((resolve) => {
     console.log(resolve)
 })
 
@@ -62,6 +65,26 @@ task4.then((resolve)=>{
 // свойства resolve и reject получают ссылки на соответствующие функции
 // resolve и reject. Следующие два обработчика запускают методы resolve и reject.
 
+let handlePromise = {
+    promise: null,
+    resolve: null,
+    reject: null,
+    onSuccess: (paramName: string) => console.log(`Promise is resolved with data: ${paramName}`),
+    onError: (paramName: string) => console.log(`Promise is rejected with error: ${paramName}`),
+}
+export const CreatePromiseHandler = () => {//@ts-ignore
+    return handlePromise.promise = new Promise((resolve, reject) => {
+        resolve(handlePromise.onSuccess);
+        reject(handlePromise.onError)
+    })
+}
+    export const ResolvePromiseHandler = ()=>{//@ts-ignore
+    return handlePromise.promise.then()
+    }
+export const RejectPromiseHandler = ()=>{//@ts-ignore
+    return handlePromise.promise.catch()
+}
+console.log(handlePromise)
 
 // Task 06
 // Создайте промис, который через 1 с возвращает строку "My name is".
@@ -70,14 +93,37 @@ task4.then((resolve)=>{
 // Создайте функцию print, которая выводит в консоль значение своего параметра
 // Добавьте два метода then и передайте созданные функции.
 
+const task6 = new Promise((resolve, reject) => {
+    setTimeout(()=>resolve("My name is"),1000)
+})
+
+const onSuccess =(p:string)=>{
+    return  p+"LaVon"
+}
+const print =()=>{
+    return
+}
+console.log(task6)
+task3.then((err) => {
+    console.log(err)
+})
 
 // Task 7
 // Создайте три промиса. Первый промис возвращает объект { name: "Anna" } через 2с,
 // второй промис возвращает объект {age: 16} через 3 с, а третий {city: ''} через 4с.
 // Получите результаты работы промисов, объедините свойства объектов
 // и выведите в консоль {name, age, city}
-
-
+const name = new Promise((resolve, reject) => {
+    setTimeout(() => resolve({ name: "Anna" }), 2000)
+})
+const age = new Promise((resolve, reject) => {
+    setTimeout(() => resolve({age: 16} ), 3000)
+})
+const city = new Promise((resolve, reject) => {
+    setTimeout(() => resolve({city: ''}), 4000)
+})
+console.log(name.then())
 
 // just a plug
-export default ()=>{};
+export default () => {
+};
