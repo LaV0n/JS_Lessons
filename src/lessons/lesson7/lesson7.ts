@@ -20,6 +20,31 @@ console.log('Lesson 7');
 // walk => `${this.name} walking`
 // проверить, что методы работают
 
+class Animal {
+    name = 'Animal'
+
+    constructor(name: string) {
+        this.name = name
+    }
+
+    walk() {
+        console.log(`${this.name} walking`)
+    }
+
+    eat() {
+        console.log(`${this.name} eating`)
+    }
+
+    sleep() {
+        console.log(`${this.name} sleeping`)
+    }
+}
+
+const dog = new Animal('dog')
+dog.eat()
+dog.sleep()
+dog.walk()
+
 
 //Task 02
 // Реализовать класс Monkey на базе класса Animal,  конструктор принимает name(по умолчанию 'Monkey') в качестве
@@ -27,11 +52,46 @@ console.log('Lesson 7');
 // проверить, что все методы работают
 
 
+class monkey extends Animal{
+    name='Monkey'
+    constructor(name:string) {//@ts-ignore
+        super(this.name);
+    }
+    roar(){
+        console.log(`${this.name} roaring`)
+    }
+    climb(){
+        console.log(`${this.name} climbing`)
+    }
+}
+
+const ape=new monkey()
+
+ape.roar()
+ape.climb()
+
+
 //Task 03
 // Реализовать класс Human на базе класса Monkey, конструктор принимает name(по умолчанию 'Human') в качестве
 // параметра, реализовать методы speak и think аналогично классу Animal
 // проверить, что все методы работают
 
+class Human extends monkey {
+    name='Human'
+    constructor(name:string) { //@ts-ignore
+        super(this.name)
+    }
+    speak(){
+        console.log(`${this.name} speaking`)
+    }
+    think(){
+        console.log(`${this.name} thinking`)
+    }
+}
+
+const alex=new Human()
+alex.speak()
+alex.think()
 
 // Task 04
 // Реализовать таски 01-03 через функции конструкторы в отдельном JS файле, реализовать наследование
@@ -42,4 +102,5 @@ console.log('Lesson 7');
 
 
 // just a plug
-export default () => {};
+export default () => {
+};
